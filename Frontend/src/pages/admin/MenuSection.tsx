@@ -162,8 +162,8 @@ const AdminMenuSection: React.FC = () => {
           <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="h-48 overflow-hidden cursor-pointer relative">
               <img
-                src={`http://localhost:8186/images/${item.image}`}
-                alt={`http://localhost:8186/images/${item.image}`}
+                src={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
+                alt={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
                 className="w-full h-full object-cover transition-transform hover:scale-105"
               />
             </div>
