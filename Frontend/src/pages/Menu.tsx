@@ -147,8 +147,8 @@ function Menu() {
                 onClick={() => handleViewDetails(item)}
               >
                 <img
-                  src={`http://localhost:8186/images/${item.image}`}
-                  alt={`http://localhost:8186/images/${item.image}`}
+                  src={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
+                  alt={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
                   className="w-full h-full object-cover transition-transform hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity">
