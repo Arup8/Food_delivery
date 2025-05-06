@@ -45,11 +45,11 @@ login: async (username, password) => {
 }
 ,
   
-  register: async (username, password,role) => {
+  register: async (username,email, password,role) => {
     // Updated to match AuthController.register
-    console.log(username, password,role);
     const response = await api.post('/auth/register', { 
       username, // Using email as username
+      email,
       password,
       role
     });
@@ -250,13 +250,26 @@ export const categories = {
 
 export const address = {
   getByUser: async (userId) => {
-    const response = await api.get(`/address/${userId}`);
+    const response = await api.get(`/customerdetails/user/${userId}`);
+    console.log(response.data);
     return response.data;
   },
-  add: async (addressData) => {
-    const response = await api.post('/address/add', addressData);
+  add: async (addressData,userId) => {
+    console.log(addressData,userId);
+    const response = await api.post(`/customerdetails/user/${userId}`, addressData);
     return response.data;
   },
+  update: async (addressData, addressId, user_id) => {
+    const updatedData = {
+      ...addressData,
+      user: { id: user_id }  // Nest user_id inside user object
+    };
+    console.log(updatedData);
+    const response = await api.put(`/customerdetails/update/${addressId}`, updatedData);
+    return response.data;
+  },
+  
+  
 };
 
 export const notifications = {

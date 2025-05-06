@@ -12,9 +12,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
+    
 
     @Column(name = "username", nullable = false, length = 30)
     private String username;
+
+	@Column(name = "email", nullable = false, length = 30)
+    private String email;
 
     @Column(name = "password", nullable = false, length = 60)
     private String password;
@@ -32,8 +36,9 @@ public class User {
 
     public User() {}
 
-    public User(String username, String password, String role) {
+    public User(String username,String email, String password, String role) {
         this.username = username;
+        this.email=email;
         this.password = password;
         this.role = role;
     }
@@ -45,6 +50,14 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
     public String getUsername() {
         return username;

@@ -26,11 +26,27 @@ public class AuthController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-    	System.out.println(user);
+    public ResponseEntity<?> register(@RequestBody User user) {
+        // Check for existing username
+        if (userService.findByUsername(user.getUsername()) != null) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body("Username already exists");
+        }
+
+        // Check for existing email
+        if (userService.findByEmail(user.getEmail()) != null) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body("Email already exists");
+        }
+
+        // Encode password and save user
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userService.save(user);
+        User savedUser = userService.save(user);
+        return ResponseEntity.ok(savedUser);
     }
+
     @GetMapping("/users")
     public List<User> getAllUsers(){
     	return userService.findAll();

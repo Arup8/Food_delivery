@@ -40,7 +40,8 @@ public class SecurityConfig {
                     "/api/auth/**",      // register/login
                     "/api/cart/**",      // cart actions
                     "/api/orders/**",    // placing orders
-                    "/api/food/**"       // fetching food items
+                    "/api/food/**" ,
+                    "/api/customerdetails/**"// fetching food items
                 ).permitAll()
                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()

@@ -25,6 +25,7 @@ export default function Login() {
     e.preventDefault();
   
     const success = await login(formData.username, formData.password);
+    console.log(formData.username, formData.password);
   
     if (success) {
       toast.success("Login successful!");
@@ -58,7 +59,7 @@ export default function Login() {
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
             />
           </div>
 

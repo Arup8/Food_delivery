@@ -10,6 +10,7 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
+    email: '',
     password: '',
     confirmPassword: '',
     role: 'CUSTOMER',
@@ -25,7 +26,8 @@ export default function Register() {
     setIsLoading(true);
     try {
       // Registration logic will be implemented here
-      await register(formData.username, formData.password,formData.role);
+      const res=await register(formData.username,formData.email, formData.password,formData.role);
+      console.log("Register:",res);
       toast.success('Registration successful!');
       navigate('/login');
     } catch (error) {
@@ -47,9 +49,24 @@ export default function Register() {
             type="text"
             id="username"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 px-2 py-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             value={formData.username}
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+            placeholder='Enter your username'
+          />
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            required
+            className="mt-1 px-2 py-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder='Enter your email'
           />
         </div>
         
@@ -61,9 +78,10 @@ export default function Register() {
             type="password"
             id="password"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 px-2 py-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            placeholder='Enter your password'
           />
         </div>
         
@@ -75,9 +93,10 @@ export default function Register() {
             type="password"
             id="confirmPassword"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 px-2 py-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             value={formData.confirmPassword}
             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+            placeholder='Confirm your password'
           />
         </div>
 
