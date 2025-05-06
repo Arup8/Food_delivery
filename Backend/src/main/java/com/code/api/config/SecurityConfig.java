@@ -20,7 +20,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl(); // Your custom service
+        return new UserDetailsServiceImpl(); // your implementation
     }
 
     @Bean
@@ -33,22 +33,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+            .cors()  // ✅ uses CorsConfig.java
+            .and()
+            .csrf().disable()
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/images/**",        // ✅ allow static images
-                    "/api/auth/**",      // register/login
-                    "/api/cart/**",      // cart actions
-                    "/api/orders/**",    // placing orders
-                    "/api/food/**" ,
-                    "/api/customerdetails/**"// fetching food items
+                    "/images/**",
+                    "/api/auth/**",
+                    "/api/cart/**",
+                    "/api/orders/**",
+                    "/api/food/**",
+                    "/api/customerdetails/**"
                 ).permitAll()
                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin().disable()
             .httpBasic().disable();
-        
 
         return http.build();
     }
