@@ -5,7 +5,7 @@ import axios from 'axios';
 // For development, use the localhost URL; for production use relative path
 const isDevelopment = import.meta.env.DEV;
 const baseURL = isDevelopment 
-  ? 'http://localhost:8186/api'  // Updated to match Spring Boot default port
+  ? 'https://fooddeliverysystem-production.up.railway.app/api'  // Updated to match Spring Boot default port
   : '/api';  // Production - change to your deployed backend URL if needed
 
 const api = axios.create({
