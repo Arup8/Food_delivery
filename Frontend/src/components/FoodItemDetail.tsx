@@ -96,7 +96,7 @@ const FoodItemDetail: React.FC<FoodItemDetailProps> = ({ foodItem, onClose }) =>
             
             <div className="md:w-1/2">
               <p className="text-lg font-bold text-orange-600 mb-2">
-                ${foodItem.price.toFixed(2)}
+              ₹{foodItem.price.toFixed(2)}
               </p>
               <p className="text-gray-700 mb-4">{foodItem.description}</p>
               <p className="text-sm text-gray-600 mb-4">Category: {foodItem.category}</p>
