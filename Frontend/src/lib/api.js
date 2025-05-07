@@ -4,10 +4,10 @@ import axios from 'axios';
 // Change this to your backend URL
 // For development, use the localhost URL; for production use relative path
 // const isDevelopment = import.meta.env.DEV;
-// const baseURL='http://localhost:8186/api'; // Local development URL
-// export const imageURL='http://localhost:8186/images/'; // Local development URL for images4
-const baseURL = 'https://invigorating-kindness-production.up.railway.app/api';
-export const imageURL='https://invigorating-kindness-production.up.railway.app/images/';
+const baseURL='http://localhost:8186/api'; // Local development URL
+export const imageURL='http://localhost:8186/images/'; // Local development URL for images4
+// const baseURL = 'https://invigorating-kindness-production.up.railway.app/api';
+// export const imageURL='https://invigorating-kindness-production.up.railway.app/images/';
 // Updated to match Spring Boot default port
    // Production - change to your deployed backend URL if needed
 
