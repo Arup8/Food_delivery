@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Trash2, ShoppingCart } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { imageURL } from '../lib/api';
 import { useAuthStore } from '../store/useAuthStore';
 import { useCartStore } from '../store/useCartStore';
 
@@ -111,7 +112,7 @@ function Cart() {
           <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* Placeholder image – update if you have an image field */}
             <img
-              src= {`http://localhost:8186/images/${item.image}`}
+              src={`${imageURL}${item.image}`}
               alt={item.name}
               className="w-full h-48 object-cover"
             />

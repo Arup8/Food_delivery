@@ -4,6 +4,7 @@ import { FoodItem } from '../types';
 import { useAuthStore } from '../store/useAuthStore';
 import { useCartStore } from '../store/useCartStore';
 import { useReviewsStore } from '../store/useReviewsStore';
+import {imageURL} from '../lib/api';
 import toast from 'react-hot-toast';
 
 interface FoodItemDetailProps {
@@ -87,7 +88,7 @@ const FoodItemDetail: React.FC<FoodItemDetailProps> = ({ foodItem, onClose }) =>
           <div className="flex flex-col md:flex-row gap-6">
             <div className="md:w-1/2">
               <img
-                src={foodItem.image}
+                src={`${imageURL}${foodItem.image}`}
                 alt={foodItem.name}
                 className="w-full h-64 object-cover rounded-md"
               />

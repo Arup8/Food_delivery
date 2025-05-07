@@ -4,6 +4,7 @@ import { useFoodStore } from '../store/useFoodStore';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import FoodItemDetail from '../components/FoodItemDetail';
+import {imageURL} from '../lib/api';
 import { FoodItem } from '../types';
 import toast from 'react-hot-toast';
 
@@ -147,8 +148,8 @@ function Menu() {
                 onClick={() => handleViewDetails(item)}
               >
                 <img
-                  src={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
-                  alt={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
+                  src={`${imageURL}${item.image}`}
+                  alt={item.name}
                   className="w-full h-full object-cover transition-transform hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity">

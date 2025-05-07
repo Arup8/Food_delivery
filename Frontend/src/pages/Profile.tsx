@@ -30,7 +30,6 @@ function Profile() {
       const response = await address.getByUser(user.id);
       const validAddresses = Array.isArray(response.data) ? response.data : [];
       setAddresses(validAddresses);
-
       if (validAddresses.length > 0) {
         const defaultAddress = validAddresses.find(a => a.isDefault) || validAddresses[0];
         setNewAddress({ ...defaultAddress });
@@ -101,51 +100,57 @@ function Profile() {
   if (!user) return null;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Your Profile</h1>
-        <button onClick={handleLogout} className="text-red-600 hover:underline flex items-center space-x-1">
+    <div className="w-full p-4 sm:p-6 md:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Your Profile</h1>
+        <button
+          onClick={handleLogout}
+          className="flex items-center text-red-600 hover:underline space-x-1"
+        >
           <LogOut size={18} />
           <span>Logout</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-        {/* Personal Info */}
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex justify-between items-center mb-4">
+      <div className="bg-white rounded-lg shadow-sm border">
+        {/* Personal Info Section */}
+        <div className="p-5 border-b border-gray-200">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
             <div className="flex items-center space-x-3">
               <div className="bg-orange-100 p-2 rounded-full">
                 <User className="text-orange-600" />
               </div>
               <h2 className="text-xl font-semibold">Personal Information</h2>
             </div>
-            {addresses.length > 0 && !isEditing && (
-              <button
-                onClick={() => setIsEditing(true)}
-                className="px-3 py-1.5 text-sm border border-orange-600 text-orange-600 rounded hover:bg-orange-50"
-              >
-                Edit
-              </button>
-            )}
-            {isEditing && (
-              <div className="space-x-2">
+
+            <div className="flex space-x-2">
+              {addresses.length > 0 && !isEditing && (
                 <button
-                  onClick={() => setIsEditing(false)}
-                  className="px-3 py-1.5 text-sm border rounded hover:bg-gray-100"
-                  disabled={isLoading}
+                  onClick={() => setIsEditing(true)}
+                  className="px-3 py-1.5 text-sm border border-orange-600 text-orange-600 rounded hover:bg-orange-50"
                 >
-                  Cancel
+                  Edit
                 </button>
-                <button
-                  onClick={handleSaveProfile}
-                  className="px-3 py-1.5 text-sm bg-orange-600 text-white rounded hover:bg-orange-700"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Saving...' : 'Save'}
-                </button>
-              </div>
-            )}
+              )}
+              {isEditing && (
+                <>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="px-3 py-1.5 text-sm border rounded hover:bg-gray-100"
+                    disabled={isLoading}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSaveProfile}
+                    className="px-3 py-1.5 text-sm bg-orange-600 text-white rounded hover:bg-orange-700"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Saving...' : 'Save'}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -156,8 +161,8 @@ function Profile() {
         </div>
 
         {/* Address Section */}
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex justify-between items-center mb-4">
+        <div className="p-5 border-b border-gray-200">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
             <div className="flex items-center space-x-3">
               <div className="bg-blue-100 p-2 rounded-full">
                 <MapPin className="text-blue-600" />
@@ -197,6 +202,7 @@ function Profile() {
                 />
                 <label>Set as default address</label>
               </div>
+
               {!isEditing && (
                 <div className="flex justify-end space-x-2 mt-4">
                   <button
@@ -240,7 +246,7 @@ function Profile() {
         </div>
 
         {/* Orders */}
-        <div className="p-6">
+        <div className="p-5">
           <div
             onClick={() => navigate('/orders')}
             className="flex items-center cursor-pointer hover:bg-gray-50 p-3 rounded-md"

@@ -3,6 +3,7 @@ import { Trash, Edit, Star } from 'lucide-react';
 import { useFoodStore } from '../../store/useFoodStore';
 import { useAuthStore } from '../../store/useAuthStore';
 import { FoodItem } from '../../types';
+import {imageURL} from '../../lib/api';
 import toast from 'react-hot-toast';
 
 const AdminMenuSection: React.FC = () => {
@@ -91,7 +92,7 @@ const AdminMenuSection: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-4">
       <h1 className="text-4xl font-bold text-gray-900 mb-8">Manage Menu</h1>
 
       {/* Add/Edit Food Item Form */}
@@ -162,8 +163,8 @@ const AdminMenuSection: React.FC = () => {
           <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="h-48 overflow-hidden cursor-pointer relative">
               <img
-                src={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
-                alt={`https://invigorating-kindness-production.up.railway.app/images/${item.image}`}
+                src={`${imageURL}${item.image}`}
+                alt={item.name}
                 className="w-full h-full object-cover transition-transform hover:scale-105"
               />
             </div>
