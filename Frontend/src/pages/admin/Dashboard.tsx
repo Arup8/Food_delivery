@@ -22,8 +22,9 @@ const AdminDashboard: React.FC = () => {
           <img
             src="logo.jpg" // Add your logo here
             alt="Logo"
-            className="h-12 w-12 object-contain"
+            className="h-12 w-12 object-contain rounded-full"
           />
+
         </div>
         <nav className="flex flex-col space-y-8 m-0 p-0">
           {navItems.map((item) => (
@@ -40,7 +41,7 @@ const AdminDashboard: React.FC = () => {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col m-0 p-0">
-      
+
 
         {/* Admin Dashboard Heading (below Navbar) */}
         <div className=" text-center text-2xl font-semibold text-gray-900 m-0 p-0">
@@ -64,9 +65,8 @@ const AdminDashboard: React.FC = () => {
           <Link
             key={item.to}
             to={item.to}
-            className={`flex flex-col items-center text-xs ${
-              location.pathname === item.to ? 'text-white font-bold' : 'text-gray-400'
-            } m-0 p-0`}
+            className={`flex flex-col items-center text-xs ${location.pathname === item.to ? 'text-white font-bold' : 'text-gray-400'
+              } m-0 p-0`}
           >
             {item.icon}
             <span>{item.label}</span>
