@@ -10,8 +10,8 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow all endpoints
-//           .allowedOrigins("https://food-delivery-system-tau.vercel.app") // Allow frontend (React or any other)
-        	.allowedOrigins("http://localhost:5173") 
+           .allowedOrigins("https://food-delivery-system-tau.vercel.app") // Allow frontend (React or any other)
+//        	.allowedOrigins("http://localhost:5173") 
         	.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true);

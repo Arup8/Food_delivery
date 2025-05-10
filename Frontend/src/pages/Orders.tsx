@@ -22,11 +22,11 @@ function OrderStatusBadge({ status }: { status: string }) {
           Processing
         </span>
       );
-    case 'delivered':
+    case 'paid':
       return (
         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
           <CheckCircle className="w-3 h-3 mr-1" />
-          Delivered
+          Paid & Delivered
         </span>
       );
     case 'cancelled':
@@ -39,7 +39,7 @@ function OrderStatusBadge({ status }: { status: string }) {
     default:
       return (
         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-          {status}
+          {status}      
         </span>
       );
   }

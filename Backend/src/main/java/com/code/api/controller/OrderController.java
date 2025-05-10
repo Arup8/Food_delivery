@@ -155,7 +155,7 @@ public class OrderController {
                     // Fetch order from DB using Razorpay order ID
                     Order order = orderService.getRazorpayOrderId(razorpayOrderId);
                     if (order != null) {
-                        order.setStatus("paid");
+                        order.setStatus("Paid");
                         orderService.save(order);
                         return "Payment verified and order status updated to 'paid'.";
                     } else {
