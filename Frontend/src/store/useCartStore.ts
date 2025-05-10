@@ -11,7 +11,7 @@ interface CartState {
   addToCart: (foodItemId: string) => Promise<void>;
   removeFromCart: (foodItemId: string) => Promise<void>;
   clearCart: () => Promise<void>;
-  checkout: () => Promise<string | null>; // returns orderId on success
+ checkout: (userId: string, payload: { cartItems: CartItem[]; totalAmount: number }) => Promise<string | null>; // returns orderId on success
 }
 
 export const useCartStore = create<CartState>((set) => ({
@@ -92,22 +92,17 @@ export const useCartStore = create<CartState>((set) => ({
     }
   },
   
-  checkout: async () => {
-    const userId = useAuthStore.getState().user?.id;
-    if (!userId) {
-      set({ error: 'User not authenticated' });
-      return null;
-    }
-    
-    try {
-      set({ isLoading: true, error: null });
-      const order = await cart.checkout(userId);
-      set({ cartItems: [], isLoading: false });
-      return order.id;
-    } catch (error) {
-      console.error('Checkout failed:', error);
-      set({ error: 'Checkout failed', isLoading: false });
-      return null;
-    }
-  },
+  checkout: async (userId, payload) => {
+  try {
+    set({ isLoading: true, error: null });
+    const order = await cart.checkout(userId, payload); // Send payload to backend
+    set({ cartItems: [], isLoading: false });
+    return order;
+  } catch (error) {
+    console.error('Checkout failed:', error);
+    set({ error: 'Checkout failed', isLoading: false });
+    return null;
+  }
+},
+
 })); 

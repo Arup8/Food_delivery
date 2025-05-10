@@ -5,12 +5,19 @@ import toast from 'react-hot-toast';
 import { imageURL } from '../lib/api';
 import { useAuthStore } from '../store/useAuthStore';
 import { useCartStore } from '../store/useCartStore';
+import { verifyPayment } from '../lib/api'; // Import the verifyPayment function
 
 function Cart() {
   const { user } = useAuthStore();
   const { cartItems, isLoading, error, fetchCartItems, removeFromCart, checkout } = useCartStore();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const navigate = useNavigate();
+  declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
 
   useEffect(() => {
     if (user) {
@@ -29,7 +36,7 @@ function Cart() {
 
   const calculateTotal = () => {
     return Array.isArray(cartItems)
-      ? cartItems.reduce((total, item) => total + item.price, 0)
+      ? cartItems.reduce((totalamount, item) => totalamount + item.price, 0)
       : 0;
   };
 
@@ -43,7 +50,7 @@ function Cart() {
     }
   };
 
-  const handleCheckout = async () => {
+ const handleCheckout = async () => {
     if (!cartItems || cartItems.length === 0) {
       toast.error('Your cart is empty');
       return;
@@ -51,19 +58,79 @@ function Cart() {
   
     setIsCheckingOut(true);
     try {
-      // Pass the user ID to the checkout function
-      const orderId = await checkout(user.id);  // Send the user ID here
-      if (!orderId) throw new Error('Failed to place order');
-      toast.success('Order placed successfully!');
-      navigate('/orders');
+      const totalAmount = calculateTotal();
+
+      const payload = {
+        cartItems,
+        totalAmount,
+      };
+
+      // Send user ID and cart data to backend for order placement
+      const order = await checkout(user.id, payload);  // Send user ID here
+      console.log('Order response:', order);
+      if (!order || !order.razorpayOrderId) {
+        throw new Error('Failed to place order');
+      }
+      console.log('Order placed:', order);
+      console.log(order.razorpayOrderId)
+
+      // Step 1: Initialize Razorpay checkout
+      const options = {
+        key: "rzp_test_2lT4Ps7v1lCf1R",  // Replace with your Razorpay key
+        amount: order.totalamount,          // Convert to paise
+        currency: "INR",
+        name: "Food Delivery",
+        description: "Payment for your food order",
+        image: "logo.jpg",  // Optional logo for Razorpay modal
+        order_id: order.razorpayOrderId,  // Razorpay order ID from backend
+        handler: async function (response) {
+          // Step 2: Verify payment after success
+          const paymentDetails = {
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+          };
+          console.log("Order ID:", paymentDetails.razorpayOrderId);
+  console.log("Payment ID:", paymentDetails.razorpayPaymentId);
+  console.log("Signature:", paymentDetails.razorpaySignature);
+
+          try {
+            const verificationResponse = await verifyPayment(paymentDetails);
+            if (verificationResponse === 'Payment verified and order status updated to \'paid\'') {
+              toast.success('Payment successful and order confirmed!');
+              navigate('/orders');  // Redirect to orders page
+            } else {
+              toast.error('Payment verification failed');
+            }
+          } catch (err) {
+            toast.error('Payment verification failed');
+            console.error(err);
+          }
+        },
+        prefill: {
+          name: user?.name || 'Guest',
+          email: user?.email || '',
+          contact: user?.contact || '',
+        },
+        notes: {
+          address: 'Food Delivery Address',
+        },
+        theme: {
+          color: "#FF9F00",  // Customize the color of the Razorpay modal
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+
     } catch (err) {
       toast.error('Checkout failed');
       console.error(err);
     } finally {
       setIsCheckingOut(false);
     }
-  };
-  
+};
+
 
   if (isLoading) {
     return (

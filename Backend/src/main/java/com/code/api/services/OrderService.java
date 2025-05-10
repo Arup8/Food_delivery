@@ -81,4 +81,9 @@ public class OrderService implements IOrderService {
 
         return savedOrder;
     }
+	@Override
+	public Order getRazorpayOrderId(String id) {
+		// TODO Auto-generated method stub
+		return orderRepository.findByRazorpayOrderId(id);
+	}
 }

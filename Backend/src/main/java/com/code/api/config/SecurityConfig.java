@@ -44,7 +44,8 @@ public class SecurityConfig {
                     "/api/cart/**",
                     "/api/orders/**",
                     "/api/food/**",
-                    "/api/customerdetails/**"
+                    "/api/customerdetails/**",
+                    "/api/payment/**"
                 ).permitAll()
                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()

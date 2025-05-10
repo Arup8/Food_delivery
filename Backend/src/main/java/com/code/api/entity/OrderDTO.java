@@ -11,21 +11,31 @@ public class OrderDTO {
     private List<FoodItem> foodItems;
     private LocalDateTime dateTime;
     private String status;
+    private double totalamount;
 
     // Constructors
     public OrderDTO() {}
 
-    public OrderDTO(int id, int userId, String username, List<FoodItem> foodItems, LocalDateTime dateTime, String status) {
+    public OrderDTO(int id, int userId, String username, List<FoodItem> foodItems, LocalDateTime dateTime, String status,double totalamount) {
         this.id = id;
         this.userId = userId;
         this.username = username;
         this.foodItems = foodItems;
         this.dateTime = dateTime;
         this.status = status;
+        this.totalamount=totalamount;
     }
 
 	public int getId() {
 		return id;
+	}
+
+	public double getTotalamount() {
+		return totalamount;
+	}
+
+	public void setTotalamount(double totalamount) {
+		this.totalamount = totalamount;
 	}
 
 	public void setId(int id) {
@@ -72,6 +82,5 @@ public class OrderDTO {
 		this.status = status;
 	}
 
-    // Getters and Setters
-    // (generate using your IDE or Lombok if you're using it)
+   
 }

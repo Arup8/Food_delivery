@@ -4,10 +4,10 @@ import axios from 'axios';
 // Change this to your backend URL
 // For development, use the localhost URL; for production use relative path
 // const isDevelopment = import.meta.env.DEV;
-// const baseURL='http://localhost:8186/api'; // Local development URL
-// export const imageURL='http://localhost:8186/images/'; // Local development URL for images4
-const baseURL = 'https://invigorating-kindness-production.up.railway.app/api';
-export const imageURL='https://invigorating-kindness-production.up.railway.app/images/';
+const baseURL='http://localhost:8186/api'; // Local development URL
+export const imageURL='http://localhost:8186/images/'; // Local development URL for images4
+// const baseURL = 'https://invigorating-kindness-production.up.railway.app/api';
+// export const imageURL='https://invigorating-kindness-production.up.railway.app/images/';
 // Updated to match Spring Boot default port
    // Production - change to your deployed backend URL if needed
 
@@ -132,11 +132,12 @@ export const cart = {
     const response = await api.post(`/cart/clear/${userId}`);
     return response.data;
   },
-  checkout: async (userId) => {
-    // This should be implemented using OrderController.placeOrder
-    const response = await api.post(`/orders/place/${userId}`);
-    return response.data;
-  },
+checkout: async (userId, payload) => {
+  // This should be implemented using OrderController.placeOrder
+  const response = await api.post(`/orders/place/${userId}`, payload);
+  return response.data;
+},
+
 };
 
 export const orders = {
@@ -281,5 +282,21 @@ export const notifications = {
     return response.data;
   },
 };
+export const verifyPayment =async ({ razorpayOrderId, razorpayPaymentId, razorpaySignature }) => {
+  try {
+    // Sending the payment verification data to the backend
+    const response = await api.post('/orders/verify-payment', {
+      razorpayOrderId,
+      razorpayPaymentId,
+      razorpaySignature,
+    });
+
+    // Return the response from the server (success or failure)
+    return response.data; // Assuming the backend sends a message like "Payment verified successfully"
+  } catch (error) {
+    console.error('Error verifying payment:', error);
+    throw error;  // Re-throw the error so you can handle it in your component
+  }
+}
 
 export default api; 

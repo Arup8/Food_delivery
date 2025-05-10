@@ -4,6 +4,7 @@ import { Package, X, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import { useOrdersStore } from '../store/useOrdersStore';
 import toast from 'react-hot-toast';
+import { imageURL } from '../lib/api';
 
 function OrderStatusBadge({ status }: { status: string }) {
   switch (status.toLowerCase()) {
@@ -178,7 +179,13 @@ function Orders() {
                 <div className="space-y-4">
                   {order.foodItems.map((item) => (
                     <div key={item.id} className="flex items-start">
-                      <div className="w-16 h-16 bg-gray-200 rounded-md" />
+                      <div className="w-16 h-16 bg-gray-200 rounded-md" >
+                        <img
+                          src={`${imageURL}${item.image}`}
+                          alt={item.name}
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                      </div>
 
                       <div className="ml-4">
                         <h5 className="font-medium text-gray-900">{item.name}</h5>

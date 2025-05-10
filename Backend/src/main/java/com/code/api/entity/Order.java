@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Entity
@@ -19,8 +20,32 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
+    
+    private LocalDateTime dateTime;
+	private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name="totalamount")
+	double totalamount;
+	@Column(name="razorpayOrderId")
+	 private String razorpayOrderId;
+	@Column(name="status")
+	 private String status="in-Process";
 
-    @ManyToMany
+    public double getTotalamount() {
+		return totalamount;
+	}
+
+	public void setTotalamount(double totalamount) {
+		this.totalamount = totalamount;
+	}
+
+	public String getRazorpayOrderId() {
+		return razorpayOrderId;
+	}
+
+	public void setRazorpayOrderId(String razorpayOrderId) {
+		this.razorpayOrderId = razorpayOrderId;
+	}
+	@ManyToMany
     @JoinTable(
         name = "order_food_items",
         joinColumns = @JoinColumn(name = "order_id"),
@@ -28,15 +53,14 @@ public class Order {
     )
     private List<FoodItem> foodItems;
 
-    private LocalDateTime dateTime;
-    private String status;
+
 
     public LocalDateTime getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+	public void setDateTime(LocalDateTime formattedDate) {
+		this.dateTime = formattedDate;
 	}
 
 	public String getStatus() {
@@ -83,5 +107,12 @@ public class Order {
         this.dateTime = dateTime;
         this.status = status;
     }
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
 }
